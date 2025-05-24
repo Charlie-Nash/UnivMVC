@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: UnivMVC.Web/Dockerfile
     ports:
-      - "5001:8080"
+      - "5000:8080"
 ```
 
 ---
