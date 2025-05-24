@@ -1,6 +1,6 @@
 # UnivMVC
 
-Microservicio de operaciones financieras, construido con **ASP.NET Core**. Desarrollado bajo principios de arquitectura limpia, con soporte para contenedores Docker.
+Aplicación Web MVC construido con ASP.NET Core. Desarrollado bajo principios de arquitectura limpia, con soporte para contenedores Docker. Consume UnivAuth, UnivAcademico y UnivCtaCte.
 
 ## 🚀 Características
 
