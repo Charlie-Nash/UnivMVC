@@ -1,0 +1,129 @@
+﻿@model List<UnivMVC.Domain.Academico.OfertaAcad>
+
+@{
+    List<int> horariosMat = ViewBag.HorariosMat;
+
+    var seleccionados = ViewBag.HorariosSeleccionados as Dictionary<int, int> ?? new Dictionary<int, int>();    
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div style="margin-top:3rem;">&nbsp;</div>
+
+    @await Html.PartialAsync("_EstudianteInfo")
+
+    if (@ViewBag.Error != "")
+    {
+        <div class="error-msg">
+            <span class="text-danger fw-bold">@ViewBag.Error</span>
+            <br />
+            <br />
+        </div>
+    }
+    else
+    {
+        <p>No hay cursos asignados.</p>
+    }
+}
+else
+{
+    string cursoActual = "ndf";
+
+    <nav class="navbar fixed-top navbar-dark bg-dark text-white p-0 p-1 d-none" style="margin-top:3.5rem;">
+        <div class="container-fluid">
+            <span>Cursos seleccionados: </span><span>1</span>
+            <span>Créditos: </span><span>2</span>
+            <button type="button" class="btn btn-sm btn-primary">Matricular</button>
+        </div>
+    </nav>
+
+    <div class="d-none" style="margin-top:2rem;">&nbsp;</div>
+
+    <div style="margin-top:3rem;">&nbsp;</div>
+    
+    @await Html.PartialAsync("_EstudianteInfo")
+
+    <p class="fw-bold">MATRÍCULA</p>
+
+    if (@ViewBag.Error != "")
+    {
+        <div class="error-msg">
+            <span class="text-danger fw-bold">@ViewBag.Error</span>
+            <br />
+            <br />
+        </div>
+    }    
+
+    <form method="post" action="Matricula/Index">
+        <div class="p-2 mb-2 fw-bold" style="display: flex; column-gap: 10px; justify-content: space-between; align-items: center; flex-wrap: nowrap; border: 1px solid black; border-radius: 5px;">
+            <div>
+                <span>Seleccionados: </span><span id="spnTotCursos">0</span>
+            </div>
+            <div>
+                <span>Créditos: </span><span id="spnTotCreditos">0</span>
+            </div>
+            <div>            
+                <button type="submit" class="btn btn-sm btn-primary fw-bold">Matricularme</button>
+            </div>        
+        </div>
+
+        @foreach (var curso in Model)
+        {
+            if (!cursoActual.Equals(@curso.nombre))
+            {
+                cursoActual = @curso.nombre;
+            
+                <div id="divCurso_@curso.curso_id" class="mb-3 p-2" style="border: 1px solid black; border-radius: 5px; font-size: 0.9rem;">
+                    <span class="fw-bold">@curso.nombre</span>                
+                    <div class="fw-bold text-secondary" style="display: flex; column-gap: 7px;">
+                        <div>Ciclo: @curso.ciclo</div>
+                        <div>Créditos: <span id="spnCursoCreditos_@curso.curso_id">@curso.creditos</span></div>
+                        <div>Tipo: @curso.tipo</div>
+                    </div>
+
+                    <div class="mt-2">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr class="fw-bold bg-dark text-white">
+                                    <td class="text-center" style="width: 30px;"></td>
+                                    <td class="text-center" style="width: 60px;">Sec.</td>
+                                    <td class="text-center" style="width: 60px;">Mod.</td>
+                                    <td class="text-start" style="padding-left: 10px;">Horario</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cursoHorario in Model)
+                                {
+                                    if (cursoHorario.nombre.Equals(cursoActual))
+                                    {
+                                        <tr class="text-center">
+                                            <td style="width: 30px;">
+                                                <input class="form-check-input shadow-none css-horario-rbt"
+                                                       type="radio"
+                                                       name="Horarios[@cursoHorario.curso_id]"
+                                                       value="@cursoHorario.id"
+                                                       id="rbtHorario_@cursoHorario.id"
+                                                       seleccionado=@(horariosMat.Contains(cursoHorario.id) ? "1" : "0")
+                                                       @(horariosMat.Contains(cursoHorario.id) ? "checked" : "")
+                                                       onclick="rtbHorario_Click(this.id)" />
+                                            </td>
+                                            <td class="text-center" style="width: 60px;">@cursoHorario.seccion</td>
+                                            <td class="text-center" style="width: 60px;">@cursoHorario.modalidad</td>
+                                            <td class="text-start" style="padding-left: 10px;">@cursoHorario.horario</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>            
+            }
+        }
+    </form>
+}
+
+<script src="~/js/matricula.js" asp-append-version="true"></script>
+
+@{
+    Layout = "~/Views/Shared/_Layout_Principal.cshtml";
+}

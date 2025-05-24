@@ -1,0 +1,52 @@
+﻿@model List<UnivMVC.Domain.CtaCte.EstadoCtaCte>
+
+<div style="margin-top:3rem;">&nbsp;</div>
+
+@await Html.PartialAsync("_EstudianteInfo")
+
+@if (Model == null || !Model.Any())
+{
+    <p>No se pudo obtener información acerca de la Cta. Cte. del estudiante.</p>
+}
+else
+{
+    <p class="fw-bold">ESTADO DE CTA. CTE</p>
+
+    <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Semestre</th>
+                <th>Nro</th>
+                <th>Fecha Vencimiento</th>
+                <th>Importe</th>
+                <th>Pagado</th>
+                <th class="d-none">Cuenta ID</th>
+                <th class="d-none">Compromiso ID</th>
+                <th class="d-none">Costo ID</th>
+                <th>Concepto</th>
+                <th>Categoría</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.semestre</td>
+                    <td>@item.nro</td>
+                    <td>@item.fecha_vencimiento.ToString("dd/MM/yyyy")</td>
+                    <td>@item.importe.ToString("C")</td>
+                    <td>@item.pagado</td>
+                    <td class="d-none">@item.cuenta_id</td>
+                    <td class="d-none">@item.compromiso_id</td>
+                    <td class="d-none">@item.costo_id</td>
+                    <td>@item.concepto</td>
+                    <td>@item.categoria</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout_Principal.cshtml";
+}

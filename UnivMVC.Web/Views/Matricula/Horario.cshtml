@@ -1,0 +1,58 @@
+﻿@model List<UnivMVC.Domain.Academico.CursoMatriculado>
+
+<div style="margin-top:3rem;">&nbsp;</div>
+
+@await Html.PartialAsync("_EstudianteInfo")
+
+<p class="fw-bold">HORARIO</p>
+
+<div style="overflow-x: auto;">
+    <table class="table table-responsive table-striped table-bordered">
+        <thead>
+            <tr class="bg-dark text-white">
+                <th class="text-center" style="width:20px;">N°</th>
+                <th class="text-center">Ciclo</th>
+                <th style="width:100px;">Cód. Curso</th>
+                <th>Nombre</th>
+                <th class="text-center">Sec</th>
+                <th class="text-center">Créd</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Mod</th>
+                <th>Horario</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null && Model.Count > 0)
+        {
+                int indice = 1;
+
+                @foreach (var curso in Model)
+                {
+                    <tr>
+                        <td class="text-center">@indice</td>
+                        <td class="text-center">@curso.ciclo</td>
+                        <td class="text-center">@curso.curso_id</td>
+                        <td>@curso.nombre</td>
+                        <td class="text-center">@curso.seccion</td>
+                        <td class="text-center">@curso.creditos</td>
+                        <td class="text-center">@curso.tipo</td>
+                        <td class="text-center">@curso.modalidad</td>
+                        <td>@curso.horario</td>
+                    </tr>
+
+                    indice++;
+                }
+        }
+        else
+        {
+            <tr><td colspan="9" class="text-danger">Cursos matriculados: 0</td></tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+@{
+    Layout = "~/Views/Shared/_Layout_Principal.cshtml";
+}

@@ -1,0 +1,19 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var semestre = HttpContextAccessor.HttpContext?.Session?.GetString("semestre") ?? "";
+    var nombre_usuario = HttpContextAccessor.HttpContext?.Session?.GetString("nombre_usuario") ?? "";
+    var sede = HttpContextAccessor.HttpContext?.Session?.GetString("sede") ?? "";
+    var facultad = HttpContextAccessor.HttpContext?.Session?.GetString("facultad") ?? "";
+    var programa = HttpContextAccessor.HttpContext?.Session?.GetString("programa") ?? "";    
+}
+
+<div class="fw-bold p-1" style="font-size: 0.75rem; border: 1px solid green; border-radius: 5px;">
+    <span>Semestre: @semestre</span><br />
+    <span>Estudiante: @nombre_usuario</span><br />
+    <span>Sede: @sede</span><br />
+    <span>Facultad: @facultad</span><br />
+    <span>Programa: @programa</span><br />
+</div>
+
+<br />

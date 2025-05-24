@@ -1,0 +1,43 @@
+﻿@model UnivMVC.Domain.Auth.TfaRequest
+
+<h2>Autenticación en dos pasos</h2>
+
+@if (ViewBag.Error != "" && ViewBag.Critico == 1)
+{
+    <p style="color:red;">@ViewBag.Error</p>
+
+    <a href="/Auth/Index" class="btn btn-danger mt-2">Regresar al Login</a>
+}
+else
+{
+    @if (ViewBag.QRCodeImage != "")
+    {
+        <span>Escanee el siguiente QR con su app de autenticación</span>
+        <br />
+
+        <img src="@ViewBag.QRCodeImage" width="200" />
+        <br />
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="Usuario" value="@ViewBag.Usr" />
+
+        <label class="mt-1">Código del autenticador</label><br />
+        <input asp-for="Codigo" type="text" required /><br />
+
+        <input type="submit" value="Verificar" class="btn btn-success mt-2" />
+        <a href="/Auth/Index" class="btn btn-danger mt-2">Cancelar</a>
+    </form>
+
+    <br />
+
+
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red;">@ViewBag.Error</p>
+    }
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}

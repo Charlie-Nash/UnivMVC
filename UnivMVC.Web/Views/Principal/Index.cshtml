@@ -1,0 +1,17 @@
+﻿<div style="margin-top:3rem;">&nbsp;</div>
+
+<h3>Bienvenido</h3>
+
+@if (ViewBag.Error == "")
+{
+    @await Html.PartialAsync("_EstudianteInfo")
+}
+else
+{
+    <p class="text-danger fw-bold">@ViewBag.Error</p>
+}
+
+
+@{
+    Layout = "~/Views/Shared/_Layout_Principal.cshtml";
+}
